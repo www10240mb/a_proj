@@ -13,11 +13,10 @@ import android.view.View;
 public class MyCanvas extends View {
     private Paint paint[] = new Paint[2];
 
-    public int gridNum = 3;
-    public float canvasWidth  = 0;
-    public float canvasHeight = 0;
-
-    public int field[][];
+    public int    gridNum      = 3;
+    public float  canvasWidth  = 0;
+    public float canvasHeight  = 0;
+    public int    field[][]    = null;
 
     public MyCanvas(Context context, int gridNum) {
         super(context);
@@ -36,9 +35,7 @@ public class MyCanvas extends View {
 
         field = new int[gridNum][gridNum];
 
-        for (int i= 0; i < gridNum; i++)
-            for (int j= 0; j < gridNum; j++)
-               field[i][j] = Color.BLACK;
+        this.refreshField();
     }
 
     @Override
@@ -47,18 +44,18 @@ public class MyCanvas extends View {
 
         canvas.drawColor(Color.BLACK);
 
-        canvasWidth  = (canvas.getWidth() - 0);
+        canvasWidth  = canvas.getWidth();
         canvasHeight = canvasWidth;
 
-        canvas.drawRect(0, 0, canvasWidth, canvasWidth, paint[0]);
+        canvas.drawRect(0, 0, canvasWidth, canvasHeight, paint[0]);
 
         float circleSize = (canvasWidth / gridNum) / 3;
 
         for (int i= 1; i < gridNum; i++) {
             canvas.drawLine(0, (i*(canvasWidth/gridNum)), canvasWidth, (i*(canvasWidth/gridNum)), paint[0]);
             canvas.drawLine((i*(canvasHeight/gridNum)), 0, (i*(canvasHeight/gridNum)), canvasHeight, paint[0]);
-
         }
+
         for (int i= 0; i < gridNum; i++) {
             for (int j = 0; j < gridNum; j++) {
                 paint[1].setColor(field[i][j]);
@@ -71,5 +68,11 @@ public class MyCanvas extends View {
         }
 
         invalidate();
+    }
+
+    public void refreshField() {
+        for (int i= 0; i < gridNum; i++)
+            for (int j= 0; j < gridNum; j++)
+                field[i][j] = Color.BLACK;
     }
 }

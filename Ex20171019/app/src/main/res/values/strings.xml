@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Ex20171019</string>
+    <string name="red">紅色</string>
+    <string name="blue">藍色</string>
+    <string name="clear">清空</string>
+    <string name="refresh">刷新</string>
 </resources>

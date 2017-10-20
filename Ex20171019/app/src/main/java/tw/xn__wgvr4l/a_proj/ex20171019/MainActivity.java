@@ -9,12 +9,15 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+/**
+ * Created by Nagahi on 2017/10/19.
+ */
+
 public class MainActivity extends AppCompatActivity {
     private Toast toast = null;
 
     MyCanvas myCanvas = null;
-    LinearLayout canvasLayout = null;
-    Button button[] = new Button[3];
+
     int useColor = 0;
 
     @Override
@@ -22,16 +25,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        canvasLayout = (LinearLayout)findViewById(R.id.canvasLayout);
+        myCanvas = new MyCanvas(this, 8);
 
-        myCanvas = new MyCanvas(this, 5);
-
+        LinearLayout canvasLayout = (LinearLayout)findViewById(R.id.canvasLayout);
         canvasLayout.addView(myCanvas);
 
-        int buttonR_Id[] = {R.id.swRed, R.id.swBlue, R.id.swClear};
-        final int buttonR_Color[] = {Color.RED, Color.BLUE, Color.BLACK};
+        final int    buttonR_Id[]    = {R.id.swRed, R.id.swBlue, R.id.swClear, R.id.allClear};
+        final int    buttonR_Color[] = {Color.RED, Color.BLUE, Color.BLACK, Color.BLACK};
+        final Button button[]        = new Button[buttonR_Id.length];
 
-        useColor = buttonR_Color[2];
+        useColor = buttonR_Color[0];
 
         for (int i = 0; i < button.length; i++) {
             final int iUse = i;
@@ -39,6 +42,11 @@ public class MainActivity extends AppCompatActivity {
             button[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (iUse == (button.length - 1)) {
+                        myCanvas.refreshField();
+                        return;
+                    }
+
                     useColor = buttonR_Color[iUse];
                 }
             });
@@ -67,25 +75,25 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 for (int i = 0; i < myCanvas.gridNum; i++) {
-                    if (((i * len) <= posX) && (posX <= (i + 1) * len)) {
+                    if (((i * len) <= posX) && (posX <= (i + 1) * len))
                         x = i;
-                    }
 
-                    if (((i * len) <= posY) && (posY <= (i + 1) * len)) {
+                    if (((i * len) <= posY) && (posY <= (i + 1) * len))
                         y = i;
-                    }
                 }
 
                 if (myCanvas.field[x][y] == buttonR_Color[2]) {
                     myCanvas.field[x][y] = useColor;
-                } else {
-                    if (useColor == buttonR_Color[2]) {
-                        myCanvas.field[x][y] = useColor;
-                    } else {
-                        toast = Toast.makeText(MainActivity.this, "該位置不可選", Toast.LENGTH_SHORT);
-                        toast.show();
-                    }
+                    return true;
                 }
+
+                if (useColor == buttonR_Color[2]) {
+                    myCanvas.field[x][y] = useColor;
+                    return true;
+                }
+
+                toast = Toast.makeText(MainActivity.this, "該位置不可選", Toast.LENGTH_SHORT);
+                toast.show();
 
                 return true;
             }
