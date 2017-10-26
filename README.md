@@ -4,6 +4,10 @@
     <li>Ex20171019</li>
   </ul>
   <img src="https://raw.githubusercontent.com/www10240mb/a_proj/master/Ex20171019.png" width="20%"/>
+  <ul>
+    <li>Ex20171026</li>
+  </ul>
+  <img src="https://raw.githubusercontent.com/www10240mb/a_proj/master/Ex20171026.png" width="20%"/>
 <<<<<<< HEAD
 </p>
 =======
